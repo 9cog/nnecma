@@ -1,0 +1,25 @@
+name: 'esmeta yet phrases detection'
+
+on: [pull_request]
+
+jobs:
+  esmeta-yetcheck:
+    name: 'esmeta yet phrases detection'
+    runs-on: ubuntu-22.04
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: install esmeta
+        uses: ./.github/workflows/esmeta-installer
+      - name: check for newly-introduced phrases
+        env:
+          FILE_PATH: spec.html
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.sha }}
+        run: |
+          "${ESMETA_HOME}"/bin/esmeta yet-check \
+            -status -yet-check:github-alert -yet-check:log \
+            "${BASE_SHA}" "${HEAD_SHA}"
+          cat "${ESMETA_HOME}"/logs/yet-check/summary.md >> $GITHUB_STEP_SUMMARY

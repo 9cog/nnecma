@@ -1,0 +1,22 @@
+name: 'esmeta typecheck'
+
+on: [pull_request]
+
+jobs:
+  esmeta-typecheck:
+    name: 'esmeta typecheck'
+    runs-on: ubuntu-22.04
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: install esmeta
+        uses: ./.github/workflows/esmeta-installer
+      - name: typecheck
+        run: '"${ESMETA_HOME}"/bin/esmeta tycheck -status -extract:log -tycheck:log -tycheck:ignore=esmeta-ignore.json'
+      - name: create logs archive
+        run: 'tar --verbose --verbose --create --gzip --file esmeta-logs.tar.gz --directory="${ESMETA_HOME}" logs/'
+      - name: upload logs archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: esmeta-logs
+          path: esmeta-logs.tar.gz
