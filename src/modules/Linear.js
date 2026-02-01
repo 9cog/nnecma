@@ -104,19 +104,23 @@ class Linear extends Module {
       this.gradInput = new Array(batchSize);
       
       for (let b = 0; b < batchSize; b++) {
-        this.gradInput[b] = new Array(this.inputSize).fill(0);
+        this.gradInput[b] = new Array(this.inputSize);
         for (let j = 0; j < this.inputSize; j++) {
+          let sum = 0;
           for (let i = 0; i < this.outputSize; i++) {
-            this.gradInput[b][j] += gradOutput[b][i] * this.weight[i][j];
+            sum += gradOutput[b][i] * this.weight[i][j];
           }
+          this.gradInput[b][j] = sum;
         }
       }
     } else {
-      this.gradInput = new Array(this.inputSize).fill(0);
+      this.gradInput = new Array(this.inputSize);
       for (let j = 0; j < this.inputSize; j++) {
+        let sum = 0;
         for (let i = 0; i < this.outputSize; i++) {
-          this.gradInput[j] += gradOutput[i] * this.weight[i][j];
+          sum += gradOutput[i] * this.weight[i][j];
         }
+        this.gradInput[j] = sum;
       }
     }
 
