@@ -1,30 +1,25 @@
 {
-  "private": true,
-  "name": "ecma262",
-  "version": "1.0.0",
-  "description": "The ECMAScript specification",
+  "name": "nnecma",
+  "version": "0.1.0",
+  "description": "Neural Network library for ECMAScript - A JavaScript implementation inspired by torch/nn",
+  "main": "src/index.js",
   "scripts": {
-    "ipr-check": "node scripts/check-form tc39/ecma262",
-    "build-head": "npm run build-only -- --lint-spec --strict",
-    "prebuild-only": "npm run clean && mkdir out && cp -R img out",
-    "build-only": "ecmarkup --verbose spec.html --multipage out",
-    "build": "npm run build-head",
-    "build-for-pdf": "npm run prebuild-only && ecmarkup --verbose spec.html out/index.html --assets external --assets-dir out --printable --lint-spec --strict",
-    "pdf": "npm run build-for-pdf && prince-books --script ./node_modules/ecmarkup/js/print.js out/index.html -o out/ECMA-262.pdf",
-    "prebuild-snapshot": "npm run clean",
-    "build-snapshot": "npm run build-head && node scripts/insert-snapshot-warning.js",
-    "clean": "rm -rf out",
-    "format": "emu-format --write spec.html",
-    "test": "exit 0",
-    "watch": "npm run build-only -- --lint-spec --watch",
-    "check-commit": "node scripts/check-commit"
+    "test": "node test/test.js"
   },
-  "repository": "tc39/ecma262",
-  "author": "ECMA TC39",
-  "license": "SEE LICENSE IN https://tc39.es/ecma262/#sec-copyright-and-software-license",
-  "homepage": "https://tc39.es/ecma262/",
-  "devDependencies": {
-    "ecmarkup": "^21.5.0",
-    "jsdom": "^27.0.0"
-  }
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/9cog/nnecma.git"
+  },
+  "keywords": [
+    "neural-network",
+    "machine-learning",
+    "deep-learning",
+    "nn",
+    "torch",
+    "ecmascript",
+    "javascript"
+  ],
+  "author": "9cog",
+  "license": "MIT",
+  "devDependencies": {}
 }
