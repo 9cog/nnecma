@@ -15,10 +15,12 @@ const Sigmoid = require('./modules/Sigmoid');
 const Tanh = require('./modules/Tanh');
 const ReservoirLayer = require('./modules/ReservoirLayer');
 const MembraneLayer = require('./modules/MembraneLayer');
+const E9FSLayer = require('./modules/E9FSLayer');
 
 // Containers
 const Sequential = require('./containers/Sequential');
 const ESNNMContainer = require('./containers/ESNNMContainer');
+const E9NFSContainer = require('./containers/E9NFSContainer');
 
 // Criterions (Loss functions)
 const MSECriterion = require('./criterions/MSECriterion');
@@ -36,10 +38,12 @@ module.exports = {
   Tanh,
   ReservoirLayer,
   MembraneLayer,
+  E9FSLayer,
   
   // Containers
   Sequential,
   ESNNMContainer,
+  E9NFSContainer,
   
   // Criterions
   MSECriterion,
