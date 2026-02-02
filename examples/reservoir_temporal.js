@@ -140,7 +140,7 @@ model.evaluate();
 
 console.log('Predicting next values in sine wave sequence:\n');
 console.log('Time | Actual | Predicted | Error');
-console.log('-' .repeat(45));
+console.log('-'.repeat(45));
 
 // Reset reservoir for test
 if (model.modules[0].resetState) {

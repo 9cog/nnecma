@@ -1,6 +1,6 @@
 # nn.ecma
 
-A Neural Network library for ECMAScript (JavaScript), inspired by [torch/nn](https://github.com/torch/nn), **now extended with ESNNM (Echo-State-Neural-Network-Membrane)** capabilities for neuro-symbolic computing.
+A Neural Network library for ECMAScript (JavaScript), inspired by [torch/nn](https://github.com/torch/nn), **now extended with ESNNM (Echo-State-Neural-Network-Membrane) capabilities** for neuro-symbolic computing.
 
 ## Overview
 
