@@ -13,9 +13,12 @@ const Linear = require('./modules/Linear');
 const ReLU = require('./modules/ReLU');
 const Sigmoid = require('./modules/Sigmoid');
 const Tanh = require('./modules/Tanh');
+const ReservoirLayer = require('./modules/ReservoirLayer');
+const MembraneLayer = require('./modules/MembraneLayer');
 
 // Containers
 const Sequential = require('./containers/Sequential');
+const ESNNMContainer = require('./containers/ESNNMContainer');
 
 // Criterions (Loss functions)
 const MSECriterion = require('./criterions/MSECriterion');
@@ -31,9 +34,12 @@ module.exports = {
   ReLU,
   Sigmoid,
   Tanh,
+  ReservoirLayer,
+  MembraneLayer,
   
   // Containers
   Sequential,
+  ESNNMContainer,
   
   // Criterions
   MSECriterion,
