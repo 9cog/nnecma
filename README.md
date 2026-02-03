@@ -1,12 +1,14 @@
 # nn.ecma
 
-A Neural Network library for ECMAScript (JavaScript), inspired by [torch/nn](https://github.com/torch/nn), **now extended with ESNNM (Echo-State-Neural-Network-Membrane) capabilities** for neuro-symbolic computing.
+A Neural Network library for ECMAScript (JavaScript), inspired by [torch/nn](https://github.com/torch/nn), **now extended with ESNNM (Echo-State-Neural-Network-Membrane) capabilities** for neuro-symbolic computing and **E9NFS (Echo-State-Neural-Filesystem)** for intelligent filesystem operations.
 
 ## Overview
 
 nn.ecma is a modular neural network library that provides a simple and flexible way to build and train neural networks in JavaScript. It follows the design principles of the original Torch nn library, implementing a Module-based architecture where every layer, activation function, and network is a module that can be easily composed.
 
-**NEW**: The library now includes advanced neuro-symbolic computing capabilities through ESNNM, combining reservoir computing (echo-state networks) with membrane computing (P-systems) for processing temporal sequences and symbolic-numeric computation.
+**NEW**: The library now includes:
+- **ESNNM**: Advanced neuro-symbolic computing capabilities through combining reservoir computing (echo-state networks) with membrane computing (P-systems) for processing temporal sequences and symbolic-numeric computation
+- **E9NFS**: Neural filesystem operations inspired by Plan9, enabling learnable and adaptive file access patterns, predictive caching, and intelligent prefetching
 
 ## Features
 
@@ -22,6 +24,14 @@ nn.ecma is a modular neural network library that provides a simple and flexible 
 - **Neuro-Symbolic Integration**: Combine subsymbolic (neural) and symbolic (membrane) computation
 - **Feature Embedding**: Learnable execution contexts for rich representation learning
 - **Temporal Sequence Processing**: Native support for time series and sequential data
+
+### E9NFS Features (NEW)
+- **Learnable Filesystem Operations**: Neural network powered Plan9-inspired filesystem operations (open, read, write, close, stat)
+- **Adaptive Path Resolution**: Learned embeddings for file paths and hierarchical navigation
+- **Intelligent Caching**: Neural decision-making for cache management
+- **Predictive Prefetching**: Temporal pattern recognition for predicting next file accesses
+- **Hierarchical Structure**: Membrane-based modeling of filesystem directory hierarchies
+- **Access Pattern Learning**: Reservoir computing for temporal access sequence analysis
 
 ## Installation
 
@@ -50,11 +60,13 @@ const nn = require('./src/index');
 - **Tanh**: Hyperbolic tangent activation function
 - **ReservoirLayer** (NEW): Echo-state network layer for reservoir computing
 - **MembraneLayer** (NEW): P-system membrane computing layer
+- **E9FSLayer** (NEW): Learnable Plan9 filesystem operations layer
 
 ### Containers
 
 - **Sequential**: Chains modules in sequence, feeding output of one to input of next
 - **ESNNMContainer** (NEW): Integrated Echo-State-Neural-Network-Membrane architecture
+- **E9NFSContainer** (NEW): Integrated Echo-State-Neural-Filesystem architecture
 
 ### Loss Functions (Criterions)
 
@@ -288,14 +300,176 @@ Integrated Echo-State-Neural-Network-Membrane architecture combining reservoir c
 - `getInternalStates()`: Get both reservoir and membrane states
 - `setInternalStates(states)`: Set internal states
 
+## E9NFS: Neural Filesystem Operations
+
+The library now includes E9NFS (Echo-State-Neural-Filesystem), a novel architecture that combines learnable Plan9 filesystem operations with neural networks for intelligent, adaptive file access patterns.
+
+### Quick Start with E9NFS
+
+```javascript
+const nn = require('nnecma');
+
+// Create an integrated E9NFS model
+const e9nfs = new nn.E9NFSContainer(
+  32,  // pathDim - dimension of path embeddings
+  64,  // contentDim - dimension of content embeddings
+  50,  // reservoirSize - temporal pattern memory
+  4,   // numMembranes - hierarchical structure
+  16,  // outputSize - output features
+  {
+    e9fs: {
+      maxDepth: 10,
+      cacheSize: 32
+    },
+    reservoir: {
+      spectralRadius: 0.95,
+      leakRate: 0.8
+    },
+    membrane: {
+      objectTypes: 12,
+      ruleComplexity: 6
+    }
+  }
+);
+
+// Process filesystem operations
+const operations = [
+  { operation: 'open', path: '/home/user/file.txt', mode: 'r' },
+  { operation: 'read', path: '/home/user/file.txt' },
+  { operation: 'close', path: '/home/user/file.txt' }
+];
+
+e9nfs.resetStates();
+const outputs = e9nfs.forward(operations);
+
+// Each output contains:
+// - features: main neural output
+// - e9fs: filesystem operation results and embeddings
+// - temporal: reservoir state and patterns
+// - hierarchical: membrane states and structure
+// - predictions: next access, cache decisions, prefetch priorities
+
+console.log('Cache decision:', outputs[1].predictions.shouldCache);
+console.log('Prefetch prediction:', outputs[1].predictions.nextAccess);
+```
+
+### When to Use E9NFS
+
+E9NFS is particularly suited for:
+
+- **Intelligent File Caching**: Learn which files to cache based on access patterns
+- **Predictive Prefetching**: Anticipate next file accesses and prefetch data
+- **Adaptive Storage Systems**: Optimize filesystem behavior based on workload
+- **Access Pattern Analysis**: Understand and model file access behaviors
+- **Smart Navigation**: Learn efficient paths through directory hierarchies
+- **Filesystem Optimization**: Neural-guided filesystem management
+
+### E9NFS Architecture
+
+1. **E9FSLayer**: Learnable filesystem operations
+   - Path encoding with learned embeddings
+   - Content representation learning
+   - Operation-specific neural parameters
+   - Adaptive caching decisions
+
+2. **ReservoirLayer**: Temporal pattern recognition
+   - Captures access sequences over time
+   - Fixed random dynamics (no training overhead)
+   - Memory of past operations
+
+3. **MembraneLayer**: Hierarchical structure modeling
+   - Models directory hierarchy as P-systems
+   - Inter-level communication
+   - Structural relationships
+
+4. **Prediction Heads**: Auxiliary outputs
+   - Next access prediction
+   - Cache decision network
+   - Prefetch priority scoring
+
+### E9FSLayer(pathDim, contentDim, options)
+
+Learnable Plan9 filesystem operations layer.
+
+**Options**:
+- `maxDepth` (default: 8): Maximum directory depth
+- `numOperations` (default: 5): Number of operation types
+- `cacheSize` (default: 32): Size of learned cache
+- `adaptiveRate` (default: 0.1): Learning rate for adaptation
+
+**Methods**:
+- `forward(input)`: Execute filesystem operation
+  - `input`: `{operation, path, content?, mode?}`
+  - `operation`: 'open' | 'read' | 'write' | 'close' | 'stat'
+- `reset()`: Reset filesystem state
+- `getStats()`: Get filesystem statistics
+
+**Operations**:
+- `open`: Open file, returns file descriptor and embedding
+- `read`: Read file, returns content embedding
+- `write`: Write file, creates content embedding
+- `close`: Close file
+- `stat`: Get file metadata
+
+### E9NFSContainer(pathDim, contentDim, reservoirSize, numMembranes, outputSize, options)
+
+Integrated neural filesystem architecture.
+
+**Options**:
+- `e9fs`: Options for E9FSLayer
+- `reservoir`: Options for ReservoirLayer  
+- `membrane`: Options for MembraneLayer
+
+**Methods**:
+- `resetStates()`: Reset all internal states
+- `getInternalStates()`: Get all internal states
+- `predictNextAccess(recentOps)`: Predict next file access
+- `analyzeAccessPatterns(operations)`: Analyze access pattern statistics
+- `processBatch(operations)`: Process batch of operations
+
+**Output Structure**:
+```javascript
+{
+  features: [...],              // Main neural features
+  e9fs: {
+    result: {...},              // Operation result
+    pathEmbedding: [...],       // Path embedding
+    contentEmbedding: [...],    // Content embedding
+    cacheScores: [...],         // Cache attention scores
+    prefetchPrediction: [...]   // Prefetch prediction
+  },
+  temporal: {
+    reservoirState: [...],      // Reservoir state
+    patterns: {
+      energy: 0.0,              // Temporal energy
+      sparsity: 0.0,            // State sparsity
+      variance: 0.0             // State variance
+    }
+  },
+  hierarchical: {
+    membraneStates: [...],      // Membrane states
+    structure: {
+      membraneActivity: [...],  // Per-membrane activity
+      activeMembranes: 0        // Count of active membranes
+    }
+  },
+  predictions: {
+    nextAccess: [...],          // Predicted next path
+    shouldCache: 0.0,           // Cache decision score
+    prefetchPriority: [...]     // Prefetch priorities
+  }
+}
+```
+
 ## Examples
 
 See the [examples](./examples) directory for more usage examples:
 
 - `simple_network.js` - Basic feedforward network
 - `xor_problem.js` - Training on XOR problem
-- `reservoir_temporal.js` - Temporal pattern recognition with reservoir computing (NEW)
-- `esnnm_integrated.js` - Integrated neuro-symbolic computing with ESNNM (NEW)
+- `reservoir_temporal.js` - Temporal pattern recognition with reservoir computing
+- `esnnm_integrated.js` - Integrated neuro-symbolic computing with ESNNM
+- `e9nfs_demo.js` - Neural filesystem operations with E9NFS (NEW)
 
 ## License
 
@@ -309,3 +483,9 @@ The ESNNM extension incorporates concepts from:
 - **Reservoir Computing**: Echo State Networks (Jaeger, 2001)
 - **Membrane Computing**: P-systems (Păun, 2000)
 - **Neuro-Symbolic AI**: Integration of neural and symbolic computation
+
+The E9NFS extension combines:
+- **Plan9 Operating System**: Filesystem concepts (Pike et al., 1995)
+- **Reservoir Computing**: Temporal pattern recognition
+- **Membrane Computing**: Hierarchical structure modeling
+- **Deep Learning**: Learnable parameters and gradient descent
