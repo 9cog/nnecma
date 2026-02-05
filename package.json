@@ -4,7 +4,12 @@
   "description": "Neural Network library for ECMAScript - A JavaScript implementation inspired by torch/nn",
   "main": "src/index.js",
   "scripts": {
-    "test": "node test/test.js"
+    "test": "node test/test.js",
+    "build-head": "npm run build-only -- --lint-spec --strict",
+    "prebuild-only": "npm run clean && mkdir -p out && cp -R img out",
+    "build-only": "ecmarkup --verbose spec.html --multipage out",
+    "build": "npm run build-head",
+    "clean": "rm -rf out"
   },
   "repository": {
     "type": "git",
@@ -21,5 +26,7 @@
   ],
   "author": "9cog",
   "license": "MIT",
-  "devDependencies": {}
+  "devDependencies": {
+    "ecmarkup": "^21.5.0"
+  }
 }
